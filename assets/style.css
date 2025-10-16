@@ -1,0 +1,56 @@
+/* Style personnalisé pour l'application Streamlit */
+
+/* En-tête principal */
+.main-header {
+    color: #1f77b4;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Cartes et conteneurs */
+.stMetric {
+    background-color: #f0f2f6;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #1f77b4;
+}
+
+/* Amélioration des onglets */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 2px;
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: 50px;
+    white-space: pre-wrap;
+    background-color: #f0f2f6;
+    border-radius: 4px 4px 0px 0px;
+    gap: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.stTabs [aria-selected="true"] {
+    background-color: #1f77b4;
+    color: white;
+}
+
+/* Boutons */
+.stButton button {
+    background-color: #1f77b4;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.stButton button:hover {
+    background-color: #1668a1;
+    color: white;
+}
+
+/* Sidebar */
+.css-1d391kg {
+    background-color: #f8f9fa;
+}

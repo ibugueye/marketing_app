@@ -1,0 +1,10 @@
+ai_marketing_app/
+│
+├── app.py                 # Fichier principal
+├── requirements.txt       # Dépendances
+├── utils/                # Fonctions utilitaires
+│   ├── __init__.py
+│   ├── ml_utils.py       # Fonctions pour le ML
+│   └── marketing_utils.py # Fonctions marketing
+└── assets/               # Images, données
+    └── style.css         # CSS personnalisé
