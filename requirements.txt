@@ -2,11 +2,11 @@
 pip 
 setuptools 
 wheel 
-
+textblob==0.17.1
+nltk==3.8.1
 # Core
 streamlit
 pandas  
-
 # Visualisation
 matplotlib==3.9.2
 seaborn==0.13.2
