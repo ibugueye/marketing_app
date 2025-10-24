@@ -1857,9 +1857,10 @@ st.markdown(
             </a>
         </div>
         <div style='font-size: 0.8rem; color: #999;'>
-            © 2024 Votre Nom. Tous droits réservés.
+            © 2024 Amiharbi Eyeug Xataxeli. Tous droits réservés.
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
