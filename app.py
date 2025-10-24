@@ -119,19 +119,43 @@ def show_homepage():
 
     # Pourquoi l'IA en Marketing ?
     st.markdown("---")
+    
     st.header("💡 Pourquoi l'IA en Marketing ?")
     
+    
+
     cols = st.columns(4)
     benefits = [
-        ("🤖", "Automatisation", "Libérez du temps pour la stratégie"),
-        ("📊", "Data-Driven", "Décisions basées sur les données"),
-        ("🎯", "Personnalisation", "Expériences sur mesure à grande échelle"),
-        ("⚡", "Avantage Concurrentiel", "Restez en avance sur le marché")
-    ]
+    ("🤖", "Automatisation", "Libérez du temps pour la stratégie"),
+    ("📊", "Data-Driven", "Décisions basées sur les données"),
+    ("🎯", "Personnalisation", "Expériences sur mesure à grande échelle"),
+    ("⚡", "Avantage Concurrentiel", "Restez en avance sur le marché")
+]
     
     for col, (icon, title, desc) in zip(cols, benefits):
         with col:
-            st.metric(title, desc, icon)
+            # st.metric(title, desc, icon)
+            st.markdown(
+            f"""
+            <div style='
+                text-align: center; 
+                padding: 1rem; 
+                border-radius: 10px; 
+                background: #f8f9fa; 
+                border: 1px solid #e9ecef;
+                margin: 0.5rem;
+                height: 180px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            '>
+                <div style='font-size: 2.5rem; margin-bottom: 0.5rem;'>{icon}</div>
+                <h4 style='margin: 0.5rem 0; color: #2c3e50; font-size: 1.1rem;'>{title}</h4>
+                <p style='font-size: 0.85rem; margin: 0; color: #6c757d; line-height: 1.4;'>{desc}</p>
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
 
 ## === FONCTIONS ML FONDAMENTALS ===
 def show_ml_fundamentals():
