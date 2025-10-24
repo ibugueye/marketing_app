@@ -1824,3 +1824,42 @@ def get_segment_strategies(segments):
     
     return {k: strategies[k] for k in segments if k in strategies}
 
+# Footer
+st.markdown("---")
+st.markdown(
+    """
+    <div style='
+        text-align: center;
+        padding: 2rem 0;
+        color: #666;
+        font-size: 0.9rem;
+    '>
+        <div style='margin-bottom: 0.5rem;'>
+            <strong>📧 Contactez-moi</strong>
+        </div>
+        <div style='margin-bottom: 0.5rem;'>
+            Amiharbi Eyeug• 
+            <a href='mailto: ibugueye@ngorweb.com' style='color: #ff4b4b; text-decoration: none;'>
+                ibugueye@ngorweb.com
+            </a>
+        </div>
+        <div style='margin-bottom: 0.5rem;'>
+            <a href='https://www.linkedin.com/in/ibucoumba/' style='color: #ff4b4b; text-decoration: none; margin: 0 10px;'>
+                LinkedIn
+            </a>
+            •
+            <a href='https://github.com/ibugueye' style='color: #ff4b4b; text-decoration: none; margin: 0 10px;'>
+                GitHub
+            </a>
+            •
+            <a href='https://ngorweb.com' style='color: #ff4b4b; text-decoration: none; margin: 0 10px;'>
+                Portfolio
+            </a>
+        </div>
+        <div style='font-size: 0.8rem; color: #999;'>
+            © 2024 Votre Nom. Tous droits réservés.
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
