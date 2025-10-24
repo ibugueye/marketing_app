@@ -1131,82 +1131,105 @@ def show_sentiment_analysis():
             st.info("**Sentiment : Neutre 😐**")
 
 def show_programmatic_advertising():
-    st.header("⚡ Publicité Programmatique avec IA")
+    st.markdown("<h2 class='section-header'>⚡ Publicité Programmatique avec IA</h2>", unsafe_allow_html=True)
     
     st.markdown("""
-    La publicité programmatique utilise l'IA pour automatiser l'achat d'espaces publicitaires 
-    en temps réel, optimisant le ROI grâce au machine learning.
-    """)
+    <div class='card small-text compact-spacing'>
+    <p style='margin: 0.2rem 0;'>La publicité programmatique utilise l'IA pour automatiser l'achat d'espaces publicitaires 
+    en temps réel, optimisant le ROI grâce au machine learning.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("🎯 Comment ça marche ?")
-        
         st.markdown("""
-        **Processus en Temps Réel (RTB - Real-Time Bidding) :**
-        
-        1. **Utilisateur** visite un site web
-        2. **SSP** (Sell-Side Platform) envoie une opportunité d'impression
-        3. **DSP** (Demand-Side Platform) évalue la valeur de l'utilisateur
-        4. **Enchères** ont lieu en millisecondes
-        5. **Meilleure offre** remporte l'impression
-        6. **Publicité** s'affiche pour l'utilisateur
-        """)
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>🎯 Comment ça marche ?</h4>
+        <p><strong>Processus en Temps Réel (RTB - Real-Time Bidding) :</strong></p>
+        <ol style='margin: 0.3rem 0; padding-left: 1.2rem;'>
+        <li><strong>Utilisateur</strong> visite un site web</li>
+        <li><strong>SSP</strong> (Sell-Side Platform) envoie une opportunité d'impression</li>
+        <li><strong>DSP</strong> (Demand-Side Platform) évalue la valeur de l'utilisateur</li>
+        <li><strong>Enchères</strong> ont lieu en millisecondes</li>
+        <li><strong>Meilleure offre</strong> remporte l'impression</li>
+        <li><strong>Publicité</strong> s'affiche pour l'utilisateur</li>
+        </ol>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Simulation d'enchère
-        st.subheader("🎮 Simulateur d'Enchère")
+        st.markdown("""
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>🎮 Simulateur d'Enchère</h4>
+        </div>
+        """, unsafe_allow_html=True)
         
         user_segment = st.selectbox(
             "Segment utilisateur cible :",
-            ["Jeunes actifs urbains", "Familles suburbanes", "Retraités aisés", "Étudiants"]
+            ["Jeunes actifs urbains", "Familles suburbanes", "Retraités aisés", "Étudiants"],
+            key="user_segment"
         )
         
-        campaign_budget = st.slider("Budget de campagne (€)", 100, 5000, 1000)
+        campaign_budget = st.slider("Budget de campagne (€)", 100, 5000, 1000, key="campaign_budget")
         
-        if st.button("🎯 Lancer l'Enchère"):
-            from utils.marketing_utils import simulate_ad_auction
-            
-            auction_result = simulate_ad_auction(campaign_budget)
+        if st.button("🎯 Lancer l'Enchère", key="launch_auction"):
+            # Simulation d'enchère simplifiée
+            import random
+            competitor_bids = [random.uniform(0.3, 1.5) * campaign_budget for _ in range(3)]
+            user_bid = campaign_budget * 0.8  # L'utilisateur offre 80% du budget
+            winning_bid = max(competitor_bids + [user_bid])
+            user_won = user_bid == winning_bid
             
             st.info(f"**Segment :** {user_segment}")
-            st.metric("Votre offre", f"€{auction_result['user_bid']:.2f}")
-            st.metric("Offre gagnante", f"€{auction_result['winning_bid']:.2f}")
             
-            if auction_result['user_won']:
+            col3, col4 = st.columns(2)
+            with col3:
+                st.metric("Votre offre", f"€{user_bid:.2f}")
+            with col4:
+                st.metric("Offre gagnante", f"€{winning_bid:.2f}")
+            
+            if user_won:
                 st.success("🎉 Vous avez remporté l'enchère !")
-                st.balloons()
             else:
                 st.error("💸 Vous avez perdu l'enchère...")
             
             # Visualisation des offres
             bids_df = pd.DataFrame({
-                'Enchérisseur': ['Vous'] + [f'Concurrent {i+1}' for i in range(len(auction_result['competitor_bids']))],
-                'Offre': [auction_result['user_bid']] + list(auction_result['competitor_bids'])
+                'Enchérisseur': ['Vous'] + [f'Concurrent {i+1}' for i in range(len(competitor_bids))],
+                'Offre': [user_bid] + competitor_bids
             })
             
             fig_bids = px.bar(bids_df, x='Enchérisseur', y='Offre', 
                              title="Comparaison des Offres",
                              color='Offre', color_continuous_scale='Viridis')
+            fig_bids.update_layout(height=300, margin=dict(l=0, r=0, t=30, b=0))
             st.plotly_chart(fig_bids, use_container_width=True)
     
     with col2:
-        st.subheader("📊 Optimisation par IA")
-        
         st.markdown("""
-        **Comment l'IA optimise les campagnes :**
-        
-        - **Bid Shading** : Ajustement automatique des offres
-        - **Audience Targeting** : Identification des profils à fort potentiel
-        - **Creative Optimization** : Test automatique des visuels
-        - **Budget Pacing** : Répartition optimale du budget dans le temps
-        """)
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>📊 Optimisation par IA</h4>
+        <p><strong>Comment l'IA optimise les campagnes :</strong></p>
+        <ul style='margin: 0.3rem 0;'>
+        <li><strong>Bid Shading</strong> : Ajustement automatique des offres</li>
+        <li><strong>Audience Targeting</strong> : Identification des profils à fort potentiel</li>
+        <li><strong>Creative Optimization</strong> : Test automatique des visuels</li>
+        <li><strong>Budget Pacing</strong> : Répartition optimale du budget dans le temps</li>
+        </ul>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Dashboard de performance
-        st.subheader("📈 Performance Campagne")
+        st.markdown("""
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>📈 Performance Campagne</h4>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Données simulées de performance
         days = list(range(1, 31))
+        np.random.seed(42)
         performance_data = {
             'Jour': days,
             'Impressions': [1000 + i*50 + np.random.normal(0, 100) for i in days],
@@ -1217,28 +1240,75 @@ def show_programmatic_advertising():
         
         df_perf = pd.DataFrame(performance_data)
         df_perf['CPA'] = df_perf['Coût'] / df_perf['Conversions']
-        df_perf['ROAS'] = (df_perf['Conversions'] * 50) / df_perf['Coût']  #假设每笔转换价值50€
+        df_perf['ROAS'] = (df_perf['Conversions'] * 50) / df_perf['Coût']  # 假设每笔转换价值50€
         
         # Métriques KPIs
-        col3, col4, col5, col6 = st.columns(4)
+        col5, col6, col7, col8 = st.columns(4)
         
-        with col3:
-            st.metric("CTR Moyen", f"{df_perf['CTR'].mean():.2%}")
-        with col4:
-            st.metric("CPA Moyen", f"€{df_perf['CPA'].mean():.1f}")
         with col5:
-            st.metric("ROAS Moyen", f"{df_perf['ROAS'].mean():.2f}x")
+            st.metric("CTR Moyen", f"{df_perf['CTR'].mean():.2%}")
         with col6:
+            st.metric("CPA Moyen", f"€{df_perf['CPA'].mean():.1f}")
+        with col7:
+            st.metric("ROAS Moyen", f"{df_perf['ROAS'].mean():.2f}x")
+        with col8:
             st.metric("Coût Total", f"€{df_perf['Coût'].sum():.0f}")
         
         # Graphique d'évolution
-        metric_choice = st.selectbox("Metrique à visualiser :", 
-                                   ['CTR', 'CPA', 'ROAS', 'Impressions'])
+        st.markdown("""
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>📊 Évolution des Performances</h4>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        metric_choice = st.selectbox(
+            "Métrique à visualiser :", 
+            ['CTR', 'CPA', 'ROAS', 'Impressions', 'Conversions'],
+            key="metric_choice"
+        )
         
         fig_trend = px.line(df_perf, x='Jour', y=metric_choice,
-                           title=f"Évolution du {metric_choice}")
+                           title=f"Évolution du {metric_choice} sur 30 jours")
+        fig_trend.update_layout(height=300, margin=dict(l=0, r=0, t=30, b=0))
         st.plotly_chart(fig_trend, use_container_width=True)
+        
+        # Analyse des performances par segment
+        st.markdown("""
+        <div class='card small-text compact-spacing'>
+        <h4 class='subsection-header'>🎯 Performance par Segment</h4>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        segments_data = {
+            'Segment': ['Jeunes actifs', 'Familles', 'Retraités', 'Étudiants'],
+            'CTR': [0.035, 0.028, 0.019, 0.042],
+            'CPA': [45.2, 38.7, 62.1, 28.9],
+            'ROAS': [3.2, 4.1, 2.1, 5.8]
+        }
+        df_segments = pd.DataFrame(segments_data)
+        
+        fig_segments = px.bar(df_segments, x='Segment', y=metric_choice,
+                             title=f"{metric_choice} par Segment",
+                             color=metric_choice)
+        fig_segments.update_layout(height=300, margin=dict(l=0, r=0, t=30, b=0))
+        st.plotly_chart(fig_segments, use_container_width=True)
 
+def simulate_ad_auction(budget, competitors=3):
+    """Simule une enchère publicitaire programmatique"""
+    np.random.seed(42)
+    competitor_bids = np.random.exponential(0.5, competitors) * budget
+
+    user_bid = budget
+    all_bids = list(competitor_bids) + [user_bid]
+    winning_bid = max(all_bids)
+
+    return {
+        'user_bid': user_bid,
+        'competitor_bids': competitor_bids,
+        'winning_bid': winning_bid,
+        'user_won': user_bid == winning_bid,
+        'all_bids': all_bids
+    }
 ## === SECTION CAS PRATIQUES ===
 def show_practical_cases():
     st.title("🚀 Cas Pratiques & Études de Cas")
@@ -1732,5 +1802,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
