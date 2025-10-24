@@ -1109,157 +1109,26 @@ def show_customer_segmentation():
             mime="text/csv"
         )
 
+
 def show_sentiment_analysis():
-    st.header("😊 Analyse de Sentiment par IA")
+    st.markdown("<h2 class='section-header'>😊 Analyse de Sentiment par IA</h2>", unsafe_allow_html=True)
     
     st.markdown("""
-    L'analyse de sentiment permet de comprendre l'opinion des clients à partir 
-    de leurs commentaires, reviews et conversations sur les réseaux sociaux.
-    """)
+    <div class='card'>
+    <p>Analyse automatique des opinions clients à partir de commentaires, reviews et conversations sociales.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    tab1, tab2, tab3 = st.tabs(["🔍 Analyse de Texte", "📈 Dashboard Social", "🎯 Cas d'Usage"])
+    text_input = st.text_area("Entrez un texte à analyser :", "Ce produit est vraiment excellent !")
     
-    with tab1:
-        st.subheader("🔍 Analysez du Texte en Direct")
-        
-        text_input = st.text_area(
-            "Collez un texte à analyser (commentaire, review, tweet...) :",
-            "J'adore ce produit ! La qualité est exceptionnelle mais la livraison a été un peu lente.",
-            height=100
-        )
-        
-        if st.button("🎯 Analyser le Sentiment"):
-            if text_input.strip():
-                from utils.marketing_utils import analyze_sentiment
-                
-                result = analyze_sentiment(text_input)
-                
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
-                    st.metric("Polarité", f"{result['polarity']:.2f}")
-                
-                with col2:
-                    st.metric("Subjectivité", f"{result['subjectivity']:.2f}")
-                
-                with col3:
-                    st.metric("Sentiment", result['label'])
-                
-                # Visualisation gauge
-                fig = go.Figure(go.Indicator(
-                    mode = "gauge+number+delta",
-                    value = result['polarity'],
-                    domain = {'x': [0, 1], 'y': [0, 1]},
-                    title = {'text': "Score de Sentiment"},
-                    gauge = {
-                        'axis': {'range': [-1, 1]},
-                        'bar': {'color': result['color']},
-                        'steps': [
-                            {'range': [-1, -0.1], 'color': "lightgray"},
-                            {'range': [-0.1, 0.1], 'color': "white"},
-                            {'range': [0.1, 1], 'color': "lightgreen"}
-                        ]
-                    }
-                ))
-                
-                st.plotly_chart(fig, use_container_width=True)
-                
-                # Analyse des mots clés
-                st.subheader("🔤 Analyse des Mots Clés")
-                
-                from textblob import TextBlob
-                blob = TextBlob(text_input)
-                
-                words_analysis = []
-                for word, pos in blob.tags:
-                    if pos.startswith('JJ'):  # Adjectives
-                        word_blob = TextBlob(word)
-                        words_analysis.append({
-                            'Mot': word,
-                            'Sentiment': word_blob.sentiment.polarity,
-                            'Type': 'Adjectif'
-                        })
-                
-                if words_analysis:
-                    df_words = pd.DataFrame(words_analysis)
-                    fig_words = px.bar(df_words, x='Mot', y='Sentiment', 
-                                     color='Sentiment', title="Sentiment des Mots Clés",
-                                     color_continuous_scale='RdYlGn')
-                    st.plotly_chart(fig_words, use_container_width=True)
-    
-    with tab2:
-        st.subheader("📈 Dashboard Social Media")
-        
-        # Simulation de données sociales
-        dates = pd.date_range('2024-01-01', '2024-03-01', freq='D')
-        n_days = len(dates)
-        
-        social_data = {
-            'date': dates,
-            'mentions': np.random.poisson(50, n_days) + np.sin(np.arange(n_days) * 0.1) * 20,
-            'sentiment': np.random.normal(0.6, 0.3, n_days).clip(-1, 1),
-            'engagement': np.random.normal(1000, 300, n_days)
-        }
-        
-        df_social = pd.DataFrame(social_data)
-        
-        # Métriques sociales
-        col1, col2, col3, col4 = st.columns(4)
-        
-        with col1:
-            st.metric("Mentions Total", f"{df_social['mentions'].sum():,}")
-        with col2:
-            st.metric("Sentiment Moyen", f"{df_social['sentiment'].mean():.2f}")
-        with col3:
-            st.metric("Engagement Moyen", f"{df_social['engagement'].mean():.0f}")
-        with col4:
-            positive_rate = (df_social['sentiment'] > 0.1).mean() * 100
-            st.metric("Taux Positif", f"{positive_rate:.1f}%")
-        
-        # Graphiques sociaux
-        fig_mentions = px.line(df_social, x='date', y='mentions', 
-                              title="Évolution des Mentions")
-        st.plotly_chart(fig_mentions, use_container_width=True)
-        
-        col5, col6 = st.columns(2)
-        
-        with col5:
-            fig_sentiment = px.histogram(df_social, x='sentiment', 
-                                       title="Distribution du Sentiment")
-            st.plotly_chart(fig_sentiment, use_container_width=True)
-        
-        with col6:
-            fig_correlation = px.scatter(df_social, x='mentions', y='engagement',
-                                       color='sentiment', title="Mentions vs Engagement")
-            st.plotly_chart(fig_correlation, use_container_width=True)
-    
-    with tab3:
-        st.subheader("🎯 Cas d'Usage Concrets")
-        
-        use_cases = [
-            {
-                "title": "📊 Surveillance de Marque",
-                "description": "Suivre en temps réel les mentions de votre marque",
-                "benefits": ["Détection de crises", "Identification d'influenceurs", "Benchmark vs concurrents"]
-            },
-            {
-                "title": "🛍️ Analyse de Reviews",
-                "description": "Analyser automatiquement les reviews produits",
-                "benefits": ["Amélioration produits", "Identification de bugs", "Optimisation du pricing"]
-            },
-            {
-                "title": "💬 Service Client",
-                "description": "Router les tickets selon l'urgence et le sentiment",
-                "benefits": ["Priorisation des urgences", "Réduction du temps de réponse", "Amélioration de la satisfaction"]
-            }
-        ]
-        
-        for use_case in use_cases:
-            with st.expander(use_case["title"]):
-                st.write(use_case["description"])
-                st.write("**Bénéfices :**")
-                for benefit in use_case["benefits"]:
-                    st.write(f"- {benefit}")
+    if st.button("Analyser le sentiment"):
+        # Analyse simplifiée
+        if "excellent" in text_input.lower() or "super" in text_input.lower():
+            st.success("**Sentiment : Positif 😊**")
+        elif "mauvais" in text_input.lower() or "nul" in text_input.lower():
+            st.error("**Sentiment : Négatif 😠**")
+        else:
+            st.info("**Sentiment : Neutre 😐**")
 
 def show_programmatic_advertising():
     st.header("⚡ Publicité Programmatique avec IA")
@@ -1863,4 +1732,5 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
