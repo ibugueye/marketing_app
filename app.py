@@ -1283,13 +1283,22 @@ def show_programmatic_advertising():
             'Segment': ['Jeunes actifs', 'Familles', 'Retraités', 'Étudiants'],
             'CTR': [0.035, 0.028, 0.019, 0.042],
             'CPA': [45.2, 38.7, 62.1, 28.9],
-            'ROAS': [3.2, 4.1, 2.1, 5.8]
+            'ROAS': [3.2, 4.1, 2.1, 5.8],
+            'Impressions': [12500, 9800, 7200, 15800],
+            'Conversions': [276, 253, 116, 547]
         }
         df_segments = pd.DataFrame(segments_data)
         
-        fig_segments = px.bar(df_segments, x='Segment', y=metric_choice,
-                             title=f"{metric_choice} par Segment",
-                             color=metric_choice)
+        # Sélection de métrique pour le graphique des segments
+        segment_metric_choice = st.selectbox(
+            "Métrique par segment :", 
+            ['CTR', 'CPA', 'ROAS', 'Impressions', 'Conversions'],
+            key="segment_metric_choice"
+        )
+        
+        fig_segments = px.bar(df_segments, x='Segment', y=segment_metric_choice,
+                             title=f"{segment_metric_choice} par Segment",
+                             color=segment_metric_choice)
         fig_segments.update_layout(height=300, margin=dict(l=0, r=0, t=30, b=0))
         st.plotly_chart(fig_segments, use_container_width=True)
 
@@ -1802,6 +1811,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
 
